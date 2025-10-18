@@ -27,6 +27,7 @@ public class Result {
         return result;
     }
 
+
     public static Result error(String msg) {
         Result result = new Result();
         result.msg = msg;
