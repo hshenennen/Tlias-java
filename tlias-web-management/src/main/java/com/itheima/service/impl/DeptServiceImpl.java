@@ -16,10 +16,17 @@ public class DeptServiceImpl implements DepService {
 
 	/**
 	 * 查询所有部门数据
-	 *
 	 */
 	@Override
 	public List<Dept> findAll() {
 		return deptMapper.findAll();
+	}
+
+	/**
+	 * 通过id来删部门
+	 */
+	@Override
+	public void deleteID(Integer id) {
+		deptMapper.deleteID(id);
 	}
 }
