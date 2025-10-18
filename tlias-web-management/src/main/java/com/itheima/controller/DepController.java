@@ -48,7 +48,7 @@ public class DepController {
 	//	}
 
 	/**
-	 * 删除部门－方式三：省略aRequestParam（前端传递的请求参数名与服务端方法形参名一致
+	 * 删除部门－方式三：省略@RequestParam（前端传递的请求参数名与服务端方法形参名一致
 	 */
 	@DeleteMapping("/depts")
 	public Result delete(Integer id) {
@@ -56,12 +56,30 @@ public class DepController {
 		depService.deleteID(id);
 		return Result.success();
 	}
+
 	/**
-	 *  添加部门
+	 * 添加部门
 	 */
 	@PostMapping("/depts")
-	public Result add(@RequestBody Dept dept){
+	public Result add(@RequestBody Dept dept) {
 		depService.add(dept);
 		return Result.success();
+	}
+
+	/**
+	 * 通过id来查部门  方法一@PathVariable("动态路径名")
+	 */
+	//	@GetMapping("/depts/{id}")
+	//	public Result getIoto(@PathVariable("id") Integer deptId) {
+	//		System.out.println("获取的id是：" + deptId);
+	//		return Result.success();
+	//	}
+
+	/**
+	 * 通过id来查部门  方法二 动态路径名和变量名一样,@PathVariable中的value可以省略
+	 */
+	@GetMapping("/depts/{id}")
+	public Result getIoto(@PathVariable Integer id) {
+		return Result.success(depService.getIoto(id));
 	}
 }

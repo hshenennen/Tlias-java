@@ -44,4 +44,14 @@ public class DeptServiceImpl implements DepService {
 		deptMapper.insert(dept);
 
 	}
+
+	/**
+	 *  通过id来查询部门
+	 * @param id
+	 * @return
+	 */
+	@Override
+	public Dept getIoto(Integer id) {
+		return deptMapper.getIoto(id);
+	}
 }

@@ -30,4 +30,10 @@ public interface DeptMapper {
 	//我们在配置中开启的驼峰命名，就对应	 create_time -- createTime
 	@Insert("insert into dept(name, create_time, update_time) values(#{name},#{createTime},#{updateTime}) ")
 	void insert(Dept dept);
+
+	/**
+	 * 通过id来查询部门
+	 */
+	@Select("select id, name, create_time, update_time from dept where id=#{id}")
+	Dept getIoto(Integer id);
 }
