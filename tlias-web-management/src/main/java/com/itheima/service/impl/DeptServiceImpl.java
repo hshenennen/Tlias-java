@@ -46,12 +46,23 @@ public class DeptServiceImpl implements DepService {
 	}
 
 	/**
-	 *  通过id来查询部门
+	 * 通过id来查询部门
+	 *
 	 * @param id
 	 * @return
 	 */
 	@Override
 	public Dept getIoto(Integer id) {
 		return deptMapper.getIoto(id);
+	}
+
+	/**
+	 * 修改部门
+	 */
+	@Override
+	public void update(Dept dept) {
+		//更新时间
+		dept.setUpdateTime(LocalDateTime.now());
+		deptMapper.update(dept);
 	}
 }

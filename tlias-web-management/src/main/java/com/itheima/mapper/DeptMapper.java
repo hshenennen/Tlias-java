@@ -15,6 +15,7 @@ public interface DeptMapper {
 //			@Result(property = "createTime", column = "create_time"),
 //			@Result(property = "updateTime", column = "update_time")
 //	})
+	//方式二：通过配置开启的驼峰命名，来自动结果映射
 	@Select("select id, name, create_time, update_time from dept order by update_time desc;")
 	List<Dept> findAll();
 
@@ -36,4 +37,10 @@ public interface DeptMapper {
 	 */
 	@Select("select id, name, create_time, update_time from dept where id=#{id}")
 	Dept getIoto(Integer id);
+
+	/**
+	 * 修改部门
+	 */
+	@Update("update dept set name=#{name},update_time=#{updateTime} where id=#{id}")
+	void update(Dept dept);
 }

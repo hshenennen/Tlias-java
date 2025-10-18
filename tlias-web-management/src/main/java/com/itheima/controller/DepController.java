@@ -82,4 +82,13 @@ public class DepController {
 	public Result getIoto(@PathVariable Integer id) {
 		return Result.success(depService.getIoto(id));
 	}
+
+	/**
+	 *  修改部门
+	 */
+	@PutMapping("/depts")
+	public  Result update(@RequestBody Dept dept){
+		depService.update(dept);
+		return Result.success();
+	}
 }
