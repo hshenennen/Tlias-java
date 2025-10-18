@@ -3,9 +3,11 @@ package com.itheima.service.impl;
 import com.itheima.mapper.DeptMapper;
 import com.itheima.pojo.Dept;
 import com.itheima.service.DepService;
+import org.apache.ibatis.annotations.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,5 +30,18 @@ public class DeptServiceImpl implements DepService {
 	@Override
 	public void deleteID(Integer id) {
 		deptMapper.deleteID(id);
+	}
+
+	/**
+	 * 添加部门
+	 */
+	@Override
+	public void add(Dept dept) {
+		//先补全dept中的属性
+		dept.setCreateTime(LocalDateTime.now());//LocalDateTime.now() 获取现在的系统时间
+		dept.setUpdateTime(LocalDateTime.now());
+		//再抛给mapper
+		deptMapper.insert(dept);
+
 	}
 }

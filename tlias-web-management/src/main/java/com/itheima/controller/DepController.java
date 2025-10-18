@@ -1,5 +1,6 @@
 package com.itheima.controller;
 
+import com.itheima.pojo.Dept;
 import com.itheima.pojo.Result;
 import com.itheima.service.DepService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -53,6 +54,14 @@ public class DepController {
 	public Result delete(Integer id) {
 		System.out.println("根据ID删除部门" + id);
 		depService.deleteID(id);
+		return Result.success();
+	}
+	/**
+	 *  添加部门
+	 */
+	@PostMapping("/depts")
+	public Result add(@RequestBody Dept dept){
+		depService.add(dept);
 		return Result.success();
 	}
 }
