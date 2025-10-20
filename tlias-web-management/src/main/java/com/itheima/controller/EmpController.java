@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -24,12 +25,14 @@ public class EmpController {
 	private EmpService empService;
 
 	/**
-	 * 分页查询
+	 * 分页查询 --原始分页
 	 */
 	@GetMapping
-	public Result page(Integer page, Integer pageSize) {
+	public Result page(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer pageSize) {
 		log.info("查询员工的信息，page={}，pageSize={}", page, pageSize);
-		PageResult pageResult = empService.PageResult (page, pageSize);
+		PageResult pageResult = empService.PageResult(page, pageSize);
 		return Result.success(pageResult);
 	}
+
+
 }

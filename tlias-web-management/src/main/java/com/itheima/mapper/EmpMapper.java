@@ -13,12 +13,22 @@ import java.util.List;
 
 @Mapper
 public interface EmpMapper {
-	// 查询总记录数
-	@Select("select count(*) from emp e left join dept d on e.dept_id = d.id")
-	public Long count();
 
-	//查询所有的员工及其对应的部门名称
-	@Select("select e.*,d.name deptName  from emp e left join dept d on e.dept_id = d.id order by e.update_time desc limit #{start },#{pageSize};")
-	public List<Emp> list(Integer start, Integer pageSize);
+	/**
+	 *  ---------------原始分页查询 ----------
+	 // 查询总记录数
+	 @Select("select count(*) from emp e left join dept d on e.dept_id = d.id")
+	 public Long count();
+
+	 //查询所有的员工及其对应的部门名称
+	 @Select("select e.*,d.name deptName  from emp e left join dept d on e.dept_id = d.id order by e.update_time desc limit #{start },#{pageSize}")
+	 public List<Emp> list(Integer start, Integer pageSize);*/
+
+
+	// 用pageHelper的时候，SQL语句结尾不要加分号（；)
+	@Select("select e.*,d.name deptName  from emp e left join dept d on e.dept_id = d.id order by e.update_time desc")
+	public List<Emp> list();
+
+
 
 }
