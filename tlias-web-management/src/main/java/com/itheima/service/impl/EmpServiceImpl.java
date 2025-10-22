@@ -2,15 +2,19 @@ package com.itheima.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.itheima.mapper.EmpExprMapper;
 import com.itheima.mapper.EmpMapper;
 import com.itheima.pojo.Emp;
+import com.itheima.pojo.EmpExpr;
 import com.itheima.pojo.EmpQueryParam;
 import com.itheima.pojo.PageResult;
 import com.itheima.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +27,9 @@ import java.util.List;
 public class EmpServiceImpl implements EmpService {
 	@Autowired
 	private EmpMapper empMapper;
+
+	@Autowired
+	private EmpExprMapper empExprMapper;
 
 
 	/**
@@ -59,12 +66,42 @@ public class EmpServiceImpl implements EmpService {
 		Page<Emp> p = (Page<Emp>) empList;
 		return new PageResult(p.getTotal(), p.getResult());
 	}*/
+
+	/**
+	 * 分页查询 -- 员工
+	 *
+	 * @param empQueryParam
+	 * @return
+	 */
 	@Override
-	public PageResult<Emp>  Page(EmpQueryParam empQueryParam) {
+	public PageResult<Emp> Page(EmpQueryParam empQueryParam) {
 		PageHelper.startPage(empQueryParam.getPage(), empQueryParam.getPageSize());
 
 		List<Emp> empList = empMapper.list(empQueryParam);
 		Page<Emp> p = (Page<Emp>) empList;
-		return new PageResult<Emp> (p.getTotal(), p.getResult());
+		return new PageResult<Emp>(p.getTotal(), p.getResult());
+	}
+
+	/**
+	 * 添加员工
+	 *
+	 * @param emp
+	 */
+	@Override
+	public void insert(Emp emp) {
+		//要补充空缺的员工信息(数据库要的)
+		emp.setUpdateTime(LocalDateTime.now());
+		emp.setUpdateTime(LocalDateTime.now());
+		empMapper.insert(emp);
+
+		//添加工作经历
+		Integer empId = emp.getId();
+		List<EmpExpr> exprList = emp.getExprList();
+		//CollectionUtils是 Spring Boot中的工具类,isEmpty方法是判断是否为空
+		if (!CollectionUtils.isEmpty(exprList)) {
+			//遍历集合，让员工找到，自己的经历  为empId赋值
+			exprList.forEach(empExpr  -> empExpr.setEmpId(empId));
+			empExprMapper.insertBatch(exprList);
+		}
 	}
 }

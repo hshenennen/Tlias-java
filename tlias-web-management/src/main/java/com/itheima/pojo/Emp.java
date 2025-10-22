@@ -24,4 +24,8 @@ public class Emp {
 
 	//部门名称
 	private String deptName;
+
+	//工作经历信息
+	private List<EmpExpr> exprList;
+
 }

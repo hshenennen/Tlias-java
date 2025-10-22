@@ -9,10 +9,7 @@ import com.itheima.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -46,10 +43,23 @@ public class EmpController {
 		PageResult pageResult = empService.PageResult(page, pageSize,name,gender,begin,end);
 		return Result.success(pageResult);
 	}*/
+
+	/**
+	 * 分页查询 --原始分页
+	 */
 	@GetMapping
 	public Result page(EmpQueryParam empQueryParam) {
 		log.info("查询员工的信息，{}", empQueryParam);
 		PageResult<Emp> pageResult = empService.Page(empQueryParam);
 		return Result.success(pageResult);
+	}
+
+	/**
+	 * 添加员工
+	 */
+	@PostMapping
+	public Result insert(@RequestBody Emp emp) {
+		empService.insert(emp);
+		return Result.success();
 	}
 }
