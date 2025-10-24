@@ -13,5 +13,6 @@ public interface EmpService {
 	PageResult<Emp> Page(EmpQueryParam empQueryParam);
 
 	//添加员工
-	void insert(Emp emp);
+	void insert(Emp emp) ;
+
 }
