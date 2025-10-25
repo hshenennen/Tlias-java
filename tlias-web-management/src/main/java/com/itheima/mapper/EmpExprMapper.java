@@ -1,6 +1,7 @@
 package com.itheima.mapper;
 
 import com.itheima.pojo.EmpExpr;
+import com.itheima.pojo.EmpLog;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

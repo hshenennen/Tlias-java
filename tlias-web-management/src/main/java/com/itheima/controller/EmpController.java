@@ -58,7 +58,7 @@ public class EmpController {
 	 * 添加员工
 	 */
 	@PostMapping
-	public Result insert(@RequestBody Emp emp) {
+	public Result insert(@RequestBody Emp emp) throws Exception {
 		empService.insert(emp);
 		return Result.success();
 	}

@@ -3,14 +3,14 @@ package com.itheima.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.itheima.mapper.EmpExprMapper;
+import com.itheima.mapper.EmpLogMapper;
 import com.itheima.mapper.EmpMapper;
-import com.itheima.pojo.Emp;
-import com.itheima.pojo.EmpExpr;
-import com.itheima.pojo.EmpQueryParam;
-import com.itheima.pojo.PageResult;
+import com.itheima.pojo.*;
+import com.itheima.service.EmpLogService;
 import com.itheima.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
@@ -30,6 +30,9 @@ public class EmpServiceImpl implements EmpService {
 
 	@Autowired
 	private EmpExprMapper empExprMapper;
+
+	@Autowired
+	private EmpLogService empLogService;
 
 
 	/**
@@ -87,21 +90,37 @@ public class EmpServiceImpl implements EmpService {
 	 *
 	 * @param emp
 	 */
+	@Transactional(rollbackFor = {Exception.class}) //事务管理  这个注解会自动进行事务的提交和退回
 	@Override
 	public void insert(Emp emp) {
-		//要补充空缺的员工信息(数据库要的)
-		emp.setUpdateTime(LocalDateTime.now());
-		emp.setUpdateTime(LocalDateTime.now());
-		empMapper.insert(emp);
+		try {
+			//要补充空缺的员工信息(数据库要的)
+			emp.setUpdateTime(LocalDateTime.now());
+			emp.setUpdateTime(LocalDateTime.now());
+			empMapper.insert(emp);
 
-		//添加工作经历
-		Integer empId = emp.getId();
-		List<EmpExpr> exprList = emp.getExprList();
-		//CollectionUtils是 Spring Boot中的工具类,isEmpty方法是判断是否为空
-		if (!CollectionUtils.isEmpty(exprList)) {
-			//遍历集合，让员工找到，自己的经历  为empId赋值
-			exprList.forEach(empExpr  -> empExpr.setEmpId(empId));
-			empExprMapper.insertBatch(exprList);
+			//int i=1/0;// 计算异常算运行式异常
+			// 运行式异常
+//		if (true){
+//			throw new Exception("出错了！！！！！");
+//		}
+
+			//添加工作经历
+			Integer empId = emp.getId();
+			List<EmpExpr> exprList = emp.getExprList();
+			//CollectionUtils是 Spring Boot中的工具类,isEmpty方法是判断是否为空
+			if (!CollectionUtils.isEmpty(exprList)) {
+				//遍历集合，让员工找到，自己的经历  为empId赋值
+				exprList.forEach(empExpr -> empExpr.setEmpId(empId));
+				empExprMapper.insertBatch(exprList);
+			}
+		} finally {
+			//记录操作的日志  无论是成功还是失败都要记录日志
+			EmpLog empLog=new EmpLog(null,LocalDateTime.now(),"添加员工"+emp);
+			//要在失败的时候，也要记录日志，就要再开启一个事件
+			empLogService.insertLog(empLog);
 		}
 	}
+
+
 }
