@@ -14,5 +14,6 @@ public interface EmpExprMapper {
 	//添加员工 -- 经历
 	void insertBatch(List<EmpExpr> exprList);
 
-
+	//删除员工的经历
+	void delete(List<Integer> empId);
 }

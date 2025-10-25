@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 员工管理
@@ -62,4 +65,26 @@ public class EmpController {
 		empService.insert(emp);
 		return Result.success();
 	}
+
+/**
+ * 删除员工
+ */
+//方式一：在Controller方法中通过数组来接收
+/*	@DeleteMapping
+	public Result delete(Integer[] ids) {
+		log.info("要删除的id是：{}", Arrays.toString(ids));
+		return Result.success();
+	}*/
+
+	/**
+	 * 删除员工
+	 */
+	@DeleteMapping
+	//@RequestParam 在集合类型中可以省略，但是有bug，不推荐省略
+	public Result delete(@RequestParam List<Integer> ids) {
+		log.info("要删除的id是:{}",ids);
+		empService.delete(ids);
+		return Result.success();
+	}
+
 }

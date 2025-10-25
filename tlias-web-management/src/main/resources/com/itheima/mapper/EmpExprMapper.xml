@@ -17,4 +17,13 @@
         </foreach>
 
 </insert>
-        </mapper>
+    <!-- 删除员工经历    -->
+    <delete id="delete">
+        delete
+        from emp_expr
+        where emp_id in
+        <foreach collection="empId" item="empId" open="(" close=")" separator=",">
+            #{empId}
+        </foreach>
+    </delete>
+</mapper>

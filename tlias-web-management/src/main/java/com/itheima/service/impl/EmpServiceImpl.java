@@ -116,10 +116,21 @@ public class EmpServiceImpl implements EmpService {
 			}
 		} finally {
 			//记录操作的日志  无论是成功还是失败都要记录日志
-			EmpLog empLog=new EmpLog(null,LocalDateTime.now(),"添加员工"+emp);
+			EmpLog empLog = new EmpLog(null, LocalDateTime.now(), "添加员工" + emp);
 			//要在失败的时候，也要记录日志，就要再开启一个事件
 			empLogService.insertLog(empLog);
 		}
+	}
+
+	@Transactional(rollbackFor = {Exception.class})//遇到异常直接滚会
+	//删员工的同时，要把员工的工作的经历也要删除，所以要用事件来管理
+	@Override
+	public void delete(List<Integer> ids) {
+        //删除员工
+		empMapper.delete(ids);
+
+        //删除员工经历
+		empExprMapper.delete(ids);
 	}
 
 
