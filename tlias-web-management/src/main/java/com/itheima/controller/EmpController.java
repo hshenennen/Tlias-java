@@ -82,9 +82,19 @@ public class EmpController {
 	@DeleteMapping
 	//@RequestParam 在集合类型中可以省略，但是有bug，不推荐省略
 	public Result delete(@RequestParam List<Integer> ids) {
-		log.info("要删除的id是:{}",ids);
+		log.info("要删除的id是:{}", ids);
 		empService.delete(ids);
 		return Result.success();
+	}
+
+	/**
+	 * 根据id来查询员工
+	 */
+
+	@GetMapping("/{id}")
+	public Result getInfo(@PathVariable Integer id) {
+		Emp emp=empService.getInfo(id);
+		return Result.success(emp);
 	}
 
 }

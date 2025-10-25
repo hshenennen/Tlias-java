@@ -133,5 +133,10 @@ public class EmpServiceImpl implements EmpService {
 		empExprMapper.delete(ids);
 	}
 
+	@Override
+	public Emp getInfo(Integer id) {
+		return 	empMapper.getById(id);
+	}
+
 
 }
