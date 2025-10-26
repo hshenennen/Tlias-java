@@ -19,4 +19,7 @@ public interface EmpService {
 
 	//根据id查询员工
 	Emp getInfo(Integer id);
+
+	//修改员工
+	void update(Emp emp);
 }

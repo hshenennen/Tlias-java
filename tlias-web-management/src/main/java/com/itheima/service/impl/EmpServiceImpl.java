@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -126,16 +127,43 @@ public class EmpServiceImpl implements EmpService {
 	//删员工的同时，要把员工的工作的经历也要删除，所以要用事件来管理
 	@Override
 	public void delete(List<Integer> ids) {
-        //删除员工
+		//删除员工
 		empMapper.delete(ids);
 
-        //删除员工经历
+		//删除员工经历
 		empExprMapper.delete(ids);
 	}
 
+	/**
+	 * 根据id查询员工
+	 */
 	@Override
 	public Emp getInfo(Integer id) {
-		return 	empMapper.getById(id);
+		return empMapper.getById(id);
+	}
+
+	/**
+	 * 修改员工
+	 */
+	@Transactional(rollbackFor = {Exception.class})
+	@Override
+	public void update(Emp emp) {
+		//1. 根据ID更新员工基本信息
+		emp.setUpdateTime(LocalDateTime.now());//更新修改时间
+		empMapper.updateById(emp);
+
+		//2.更新员工的工作经历   先删,再添加
+		empExprMapper.delete(Arrays.asList(emp.getId()));
+		//Arrays.asList()转换类型有限制, Integer[] → List<Integer>  String[] → List<String>  可以
+
+		//加入员工经历
+		Integer empId = emp.getId();
+		List<EmpExpr> exprList = emp.getExprList();
+		if (!CollectionUtils.isEmpty(exprList)) {
+			exprList.forEach(empExpr -> empExpr.setEmpId(empId));
+			empExprMapper.insertBatch(exprList);
+		}
+
 	}
 
 

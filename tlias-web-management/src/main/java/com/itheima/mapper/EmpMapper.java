@@ -59,4 +59,11 @@ public interface EmpMapper {
 	 * 根据id查询员工
 	 */
 	Emp getById(Integer id);
+
+	/**
+	 * 修改员工
+	 */
+	void updateById(Emp emp);
+
+
 }
