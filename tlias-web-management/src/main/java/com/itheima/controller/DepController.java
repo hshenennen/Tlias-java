@@ -89,6 +89,7 @@ public class DepController {
 	@GetMapping("/{id}")
 	public Result getIoto(@PathVariable Integer id) {
 		return Result.success(depService.getIoto(id));
+
 	}
 
 	/**
