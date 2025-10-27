@@ -72,7 +72,9 @@ public class ClazzsController {
 	 */
 	@GetMapping("/list")
 	public Result allClazzs() {
-		List<Clazz> clazzList =clazzsService.allClazzs();
+		List<Clazz> clazzList = clazzsService.allClazzs();
 		return Result.success(clazzList);
 	}
+
+
 }
