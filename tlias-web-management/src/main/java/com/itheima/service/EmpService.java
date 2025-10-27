@@ -22,4 +22,7 @@ public interface EmpService {
 
 	//修改员工
 	void update(Emp emp);
+
+	//查询所有的班主任
+	List<Emp> getAllLIst();
 }

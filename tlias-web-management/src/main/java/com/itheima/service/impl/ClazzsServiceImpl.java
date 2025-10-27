@@ -11,6 +11,7 @@ import com.itheima.service.ClazzsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -34,9 +35,24 @@ public class ClazzsServiceImpl implements ClazzsService {
 		return new PageResult<Clazz>(page.getTotal(), page.getResult());
 	}
 
-	//删除班级
+	/**
+	 * 删除班级
+	 */
 	@Override
 	public void deleteClazzs(Integer id) {
-      clazzsMapper.deleteClazzs(id);
+		clazzsMapper.deleteClazzs(id);
+	}
+
+	/**
+	 *  添加班级
+	 */
+	@Override
+	public void postClazzs(Clazz clazz) {
+
+		//补全clazz中的属性
+		clazz.setCreateTime(LocalDateTime.now());
+		clazz.setUpdateTime(LocalDateTime.now());
+		//再传给mapper
+		clazzsMapper.postClazzs(clazz);
 	}
 }

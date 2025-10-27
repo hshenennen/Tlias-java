@@ -105,4 +105,13 @@ public class EmpController {
 		empService.update(emp);
 		return Result.success();
 	}
+
+	/**
+	 * 查询所有的班主任
+	 */
+	@GetMapping("/list")
+	public Result getAllLIst() {
+		List<Emp> list = empService.getAllLIst();
+		return Result.success(list);
+	}
 }

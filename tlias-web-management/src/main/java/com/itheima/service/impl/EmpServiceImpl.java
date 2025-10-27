@@ -166,5 +166,13 @@ public class EmpServiceImpl implements EmpService {
 
 	}
 
+	/**
+	 * 查询所有的班主任
+	 */
+	@Override
+	public List<Emp> getAllLIst() {
+		return empMapper.getAllLIst();
+	}
+
 
 }

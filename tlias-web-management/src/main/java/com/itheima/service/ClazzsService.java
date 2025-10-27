@@ -10,4 +10,7 @@ public interface ClazzsService {
 
 	//删除班级
 	void deleteClazzs(Integer id);
+
+	//添加班级
+	void postClazzs(Clazz clazz);
 }

@@ -36,4 +36,14 @@ public class ClazzsController {
 		clazzsService.deleteClazzs(id);
 		return Result.success();
 	}
+
+	/**
+	 * 3.3 添加班级
+	 */
+	@PostMapping
+	public Result postClazzs(@RequestBody Clazz clazz) {
+		log.info("data中的数据是{}", clazz);
+		clazzsService.postClazzs(clazz);
+		return Result.success();
+	}
 }

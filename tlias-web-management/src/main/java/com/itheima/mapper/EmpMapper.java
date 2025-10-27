@@ -75,4 +75,10 @@ public interface EmpMapper {
 	 */
 	@MapKey("mane")
 	List<Map<String, Object>> countEmpGenderData();
+
+	/**
+	 * 查询所有的班主任
+	 */
+	@Select("select id, username, password, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time from emp where job=1;")
+	List<Emp> getAllLIst();
 }

@@ -1,5 +1,6 @@
 package com.itheima.mapper;
 
+import com.itheima.pojo.Emp;
 import com.itheima.pojo.EmpExpr;
 import com.itheima.pojo.EmpLog;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,4 +17,5 @@ public interface EmpExprMapper {
 
 	//删除员工的经历
 	void delete(List<Integer> empId);
+
 }
