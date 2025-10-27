@@ -13,5 +13,11 @@ public interface ClazzsMapper {
 	/**
 	 * 班级列表查询
 	 */
-	 List<Clazz> getClazzs(ClazzsQueryParam clazzsQueryParam);
+	List<Clazz> getClazzs(ClazzsQueryParam clazzsQueryParam);
+
+	/**
+	 * 删除班级
+	 */
+	@Delete("delete from clazz where id = #{id};")
+	void deleteClazzs(Integer id);
 }

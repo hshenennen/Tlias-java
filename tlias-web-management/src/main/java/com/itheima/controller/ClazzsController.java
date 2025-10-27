@@ -7,9 +7,7 @@ import com.itheima.pojo.Result;
 import com.itheima.service.ClazzsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequestMapping("/clazzs")
@@ -27,5 +25,15 @@ public class ClazzsController {
 		PageResult<Clazz> pageResult = clazzsService.getClazzs(clazzsQueryParam);
 		log.info("查询班级的信息，{}", clazzsQueryParam);
 		return Result.success(pageResult);
+	}
+
+	/**
+	 * 删除班级
+	 */
+	@DeleteMapping("/{id}")
+	public Result deleteClazzs(@PathVariable Integer id) {
+		log.info("要删除的id是{}", id);
+		clazzsService.deleteClazzs(id);
+		return Result.success();
 	}
 }
