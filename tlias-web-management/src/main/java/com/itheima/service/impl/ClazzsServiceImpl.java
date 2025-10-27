@@ -64,4 +64,14 @@ public class ClazzsServiceImpl implements ClazzsService {
 
 		return clazzsMapper.getIdClazzs(id);
 	}
+
+	/**
+	 * 修改班级
+	 */
+	@Override
+	public void modifyClazzs(Clazz clazz) {
+		//更新修改时间
+		clazz.setUpdateTime(LocalDateTime.now());
+		clazzsMapper.modifyClazzs(clazz);
+	}
 }

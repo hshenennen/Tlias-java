@@ -42,6 +42,7 @@ public class ClazzsController {
 		log.info("data中的数据是{}", clazz);
 		clazzsService.postClazzs(clazz);
 		return Result.success();
+
 	}
 
 	/**
@@ -49,8 +50,19 @@ public class ClazzsController {
 	 */
 	@GetMapping("/{id}")
 	public Result getIdClazzs(@PathVariable Integer id) {
-		log.info("要查询的id是{}",id);
-		Clazz clazz =clazzsService.getIdClazzs(id);
+		log.info("要查询的id是{}", id);
+		Clazz clazz = clazzsService.getIdClazzs(id);
 		return Result.success(clazz);
 	}
+
+	/**
+	 * 修改班级
+	 */
+	@PutMapping
+	public Result modifyClazzs(@RequestBody Clazz clazz) {
+		log.info("传过来的clazz对象是{}",clazz);
+		clazzsService.modifyClazzs(clazz);
+		return Result.success();
+	}
+
 }
