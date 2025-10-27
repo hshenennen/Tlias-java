@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -42,7 +43,21 @@ public class StudentServiceImpl implements StudentService {
 	 */
 	@Override
 	public void deleteStudent(List<Integer> ids) {
-        studentMapper.deleteStudent(ids);
+		studentMapper.deleteStudent(ids);
+	}
+
+	/**
+	 * 增加学员
+	 */
+	@Override
+	public void addStudent(Student student) {
+		//补全信息
+       student.setCreateTime(LocalDateTime.now());
+	   student.setUpdateTime(LocalDateTime.now());
+	   student.setViolationCount((short) 0);
+	   student.setViolationScore((short) 0);
+
+	   studentMapper.addStudent(student);
 	}
 
 

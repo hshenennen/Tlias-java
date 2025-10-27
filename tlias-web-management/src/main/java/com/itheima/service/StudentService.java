@@ -12,4 +12,7 @@ public interface StudentService {
 
 	//删除学员
 	void deleteStudent(List<Integer> ids);
+
+	//增加学员
+	void addStudent(Student student);
 }

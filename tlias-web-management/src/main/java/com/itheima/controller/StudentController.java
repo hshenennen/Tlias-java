@@ -6,6 +6,7 @@ import com.itheima.pojo.Student;
 import com.itheima.pojo.StudentQueryParam;
 import com.itheima.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,16 +24,27 @@ public class StudentController {
 	 */
 	@GetMapping
 	public Result getPageStudent(StudentQueryParam studentQueryParam) {
-		PageResult<Student>  pageResult =studentService.getPageStudent(studentQueryParam);
+		PageResult<Student> pageResult = studentService.getPageStudent(studentQueryParam);
 		return Result.success(pageResult);
 	}
+
 	/**
 	 * 删除学员
 	 */
 	@DeleteMapping("/{ids}")
 	public Result deleteStudent(@PathVariable List<Integer> ids) {
 		log.info("要删除的学员id是{}", ids);
-     studentService.deleteStudent(ids);
+		studentService.deleteStudent(ids);
+		return Result.success();
+	}
+
+	/**
+	 * 增加学员
+	 */
+	@PostMapping
+	public Result addStudent(@RequestBody Student student) {
+		log.info("要增加的学生是{}",student);
+        studentService.addStudent(student);
 		return Result.success();
 	}
 }
