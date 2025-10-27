@@ -13,4 +13,7 @@ public interface ClazzsService {
 
 	//添加班级
 	void postClazzs(Clazz clazz);
+
+	//根据ID查询班级
+	Clazz getIdClazzs(Integer id);
 }

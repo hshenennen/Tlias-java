@@ -44,7 +44,7 @@ public class ClazzsServiceImpl implements ClazzsService {
 	}
 
 	/**
-	 *  添加班级
+	 * 添加班级
 	 */
 	@Override
 	public void postClazzs(Clazz clazz) {
@@ -54,5 +54,14 @@ public class ClazzsServiceImpl implements ClazzsService {
 		clazz.setUpdateTime(LocalDateTime.now());
 		//再传给mapper
 		clazzsMapper.postClazzs(clazz);
+	}
+
+	/**
+	 * 根据ID查询班级
+	 */
+	@Override
+	public Clazz getIdClazzs(Integer id) {
+
+		return clazzsMapper.getIdClazzs(id);
 	}
 }

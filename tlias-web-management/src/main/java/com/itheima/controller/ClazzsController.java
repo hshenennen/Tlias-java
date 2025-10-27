@@ -1,9 +1,6 @@
 package com.itheima.controller;
 
-import com.itheima.pojo.Clazz;
-import com.itheima.pojo.ClazzsQueryParam;
-import com.itheima.pojo.PageResult;
-import com.itheima.pojo.Result;
+import com.itheima.pojo.*;
 import com.itheima.service.ClazzsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +35,22 @@ public class ClazzsController {
 	}
 
 	/**
-	 * 3.3 添加班级
+	 * 添加班级
 	 */
 	@PostMapping
 	public Result postClazzs(@RequestBody Clazz clazz) {
 		log.info("data中的数据是{}", clazz);
 		clazzsService.postClazzs(clazz);
 		return Result.success();
+	}
+
+	/**
+	 * 根据ID查询班级
+	 */
+	@GetMapping("/{id}")
+	public Result getIdClazzs(@PathVariable Integer id) {
+		log.info("要查询的id是{}",id);
+		Clazz clazz =clazzsService.getIdClazzs(id);
+		return Result.success(clazz);
 	}
 }
