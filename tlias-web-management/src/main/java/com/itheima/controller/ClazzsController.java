@@ -1,0 +1,31 @@
+package com.itheima.controller;
+
+import com.itheima.pojo.Clazz;
+import com.itheima.pojo.ClazzsQueryParam;
+import com.itheima.pojo.PageResult;
+import com.itheima.pojo.Result;
+import com.itheima.service.ClazzsService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@Slf4j
+@RequestMapping("/clazzs")
+@RestController
+public class ClazzsController {
+
+	@Autowired
+	private ClazzsService clazzsService;
+
+	/**
+	 * 3.1 班级列表查询
+	 */
+	@GetMapping
+	public Result getClazzs(ClazzsQueryParam clazzsQueryParam) {
+		PageResult<Clazz> pageResult = clazzsService.getClazzs(clazzsQueryParam);
+		log.info("查询班级的信息，{}", clazzsQueryParam);
+		return Result.success(pageResult);
+	}
+}

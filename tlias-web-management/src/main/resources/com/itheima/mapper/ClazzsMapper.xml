@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mapper.ClazzsMapper">
+
+    <!-- 使用 XML 实体转义   < 替换为 &lt    > 替换为 &gt;     -->
+    <select id="getClazzs" resultType="com.itheima.pojo.Clazz">
+        select c.id,
+        c.name,
+        c.room,
+        c.begin_date,
+        c.end_date,
+        c.master_id,
+        c.create_time,
+        c.update_time,
+        e.name masterName,
+        case
+        when now() &gt; c.end_date then '已结课'
+        when now() &lt; c.begin_date then '未开班'
+        else '在读中' end status
+        from clazz c left join
+         emp e
+        on e.id = c.master_id
+        <where>
+            <if test="name !=null and name != '' ">
+                and c.name like concat('%',#{name},'%')
+            </if>
+            <if test="begin !=null and end!=null">
+                and c.end_date between #{begin} and #{end}
+            </if>
+        </where>
+        order by id desc
+    </select>
+</mapper>

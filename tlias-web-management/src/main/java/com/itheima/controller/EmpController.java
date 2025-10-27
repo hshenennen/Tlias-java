@@ -48,7 +48,7 @@ public class EmpController {
 	}*/
 
 	/**
-	 * 分页查询 --原始分页
+	 * 分页查询
 	 */
 	@GetMapping
 	public Result page(EmpQueryParam empQueryParam) {
