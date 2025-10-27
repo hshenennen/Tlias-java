@@ -30,8 +30,14 @@ public interface ClazzsMapper {
 	Clazz getIdClazzs(Integer id);
 
 	/**
-	 *  修改班级
+	 * 修改班级
 	 */
 	@Update("update  clazz set name=#{name},room=#{room},begin_date=#{beginDate},end_date=#{endDate},master_id=#{masterId},subject=#{subject} where id=#{id};")
 	void modifyClazzs(Clazz clazz);
+
+	/**
+	 * 查询所有班级
+	 */
+	@Select("select id, name, room, begin_date, end_date, master_id, subject, create_time, update_time from clazz;")
+	List<Clazz> allClazzs();
 }

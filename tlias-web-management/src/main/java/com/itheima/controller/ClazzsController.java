@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RequestMapping("/clazzs")
 @RestController
@@ -60,9 +62,17 @@ public class ClazzsController {
 	 */
 	@PutMapping
 	public Result modifyClazzs(@RequestBody Clazz clazz) {
-		log.info("传过来的clazz对象是{}",clazz);
+		log.info("传过来的clazz对象是{}", clazz);
 		clazzsService.modifyClazzs(clazz);
 		return Result.success();
 	}
 
+	/**
+	 * 查询所有班级
+	 */
+	@GetMapping("/list")
+	public Result allClazzs() {
+		List<Clazz> clazzList =clazzsService.allClazzs();
+		return Result.success(clazzList);
+	}
 }

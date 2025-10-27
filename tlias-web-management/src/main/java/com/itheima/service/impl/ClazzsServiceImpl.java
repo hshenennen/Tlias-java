@@ -74,4 +74,15 @@ public class ClazzsServiceImpl implements ClazzsService {
 		clazz.setUpdateTime(LocalDateTime.now());
 		clazzsMapper.modifyClazzs(clazz);
 	}
+
+	/**
+	 * 查询所有班级
+	 *
+	 * @return
+	 */
+	@Override
+	public List<Clazz> allClazzs() {
+
+		return clazzsMapper.allClazzs();
+	}
 }
