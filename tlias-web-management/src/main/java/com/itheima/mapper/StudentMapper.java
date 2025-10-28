@@ -54,4 +54,11 @@ public interface StudentMapper {
 	 */
 	@MapKey("name")
 	List<Map<String, Object>> getStudentCountData();
+
+	/**
+	 * id查询班级是否有学员
+	 */
+	@Select("select count(*) from student where clazz_id=1 order by clazz_id;")
+	Integer getIdClass(Integer id);
+
 }

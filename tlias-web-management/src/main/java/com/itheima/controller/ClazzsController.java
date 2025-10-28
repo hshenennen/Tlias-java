@@ -32,8 +32,8 @@ public class ClazzsController {
 	@DeleteMapping("/{id}")
 	public Result deleteClazzs(@PathVariable Integer id) {
 		log.info("要删除的id是{}", id);
-		clazzsService.deleteClazzs(id);
-		return Result.success();
+
+		return clazzsService.deleteClazzs(id);
 	}
 
 	/**

@@ -30,4 +30,5 @@ public class GlobalExceptionHandler {
 		return Result.error(arr[2] + "已存在");
 
 	}
+
 }

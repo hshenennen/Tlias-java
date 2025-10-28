@@ -30,6 +30,8 @@ public class DeptServiceImpl implements DepService {
 	@Override
 	public void deleteID(Integer id) {
 		deptMapper.deleteID(id);
+
+
 	}
 
 	/**

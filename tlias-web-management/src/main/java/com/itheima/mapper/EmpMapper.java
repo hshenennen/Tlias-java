@@ -81,4 +81,10 @@ public interface EmpMapper {
 	 */
 	@Select("select id, username, password, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time from emp where job=1;")
 	List<Emp> getAllLIst();
+
+	/**
+	 *  通过部门id来查员工
+	 */
+	@Select("select count(*) from emp  where job=#{id} order by job;")
+	Integer getJobEmp(Integer id);
 }

@@ -1,7 +1,9 @@
 package com.itheima.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.itheima.mapper.EmpMapper;
 import com.itheima.pojo.Dept;
+import com.itheima.pojo.Emp;
 import com.itheima.pojo.Result;
 import com.itheima.service.DepService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,7 +12,10 @@ import org.apache.ibatis.annotations.Delete;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 //一个完整的请求路径，应该是类上的 @RequestMapping 的value属性 + 方法上的 @RequestMapping的value属性。
 @Slf4j  //可以注解的写法-- log日志
@@ -24,6 +29,9 @@ public class DepController {
 
 	@Autowired
 	private DepService depService;//面对接口编程
+
+	@Autowired
+	private EmpMapper empMapper;
 
 	//@RequestMapping(value = "/depts", method = RequestMethod.GET)//method是请求方法
 	@GetMapping
@@ -57,11 +65,20 @@ public class DepController {
 	/**
 	 * 删除部门－方式三：省略@RequestParam（前端传递的请求参数名与服务端方法形参名一致
 	 */
+	@Transactional(rollbackFor = {Exception.class})
 	@DeleteMapping
-	public Result delete(Integer id) {
+	public Result delete(Integer id) throws Exception {
 		//System.out.println("根据ID删除部门" + id);
-		log.info("根据ID删除部门 {}",id); //{}占位符，防止字符串的拼接
-		depService.deleteID(id);
+		log.info("根据ID删除部门 {}", id); //{}占位符，防止字符串的拼接
+		Integer count = empMapper.getJobEmp(id);
+		log.info("数量是{}", count);
+
+		if (count > 0) {
+			//throw new Exception("对不起，当前部门下有员工，不能直接删除！");
+			return Result.error("对不起，当前部门下有员工，不能直接删除！");
+		} else {
+			depService.deleteID(id);
+		}
 		return Result.success();
 	}
 

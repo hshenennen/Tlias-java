@@ -3,13 +3,16 @@ package com.itheima.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.itheima.mapper.ClazzsMapper;
+import com.itheima.mapper.StudentMapper;
 import com.itheima.pojo.Clazz;
 import com.itheima.pojo.ClazzsQueryParam;
 import com.itheima.pojo.PageResult;
+import com.itheima.pojo.Result;
 import com.itheima.service.ClazzsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +23,8 @@ public class ClazzsServiceImpl implements ClazzsService {
 	@Autowired
 	private ClazzsMapper clazzsMapper;
 
+	@Autowired
+	private StudentMapper studentMapper;
 
 	/**
 	 * 班级列表查询
@@ -37,10 +42,20 @@ public class ClazzsServiceImpl implements ClazzsService {
 
 	/**
 	 * 删除班级
+	 *
+	 * @return
 	 */
+	@Transactional(rollbackFor = {Exception.class})
 	@Override
-	public void deleteClazzs(Integer id) {
-		clazzsMapper.deleteClazzs(id);
+	public Result deleteClazzs(Integer id) {
+		Integer idClass = studentMapper.getIdClass(id);
+		if (idClass>0){
+			return Result.error("对不起，当前班级下有学员，不能直接删除！");
+		}else {
+			clazzsMapper.deleteClazzs(id);
+		}
+
+		return Result.success();
 	}
 
 	/**

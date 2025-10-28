@@ -3,6 +3,7 @@ package com.itheima.service;
 import com.itheima.pojo.Clazz;
 import com.itheima.pojo.ClazzsQueryParam;
 import com.itheima.pojo.PageResult;
+import com.itheima.pojo.Result;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface ClazzsService {
 	PageResult<Clazz> getClazzs(ClazzsQueryParam clazzsQueryParam);
 
 	//删除班级
-	void deleteClazzs(Integer id);
+	Result deleteClazzs(Integer id);
 
 	//添加班级
 	void postClazzs(Clazz clazz);
