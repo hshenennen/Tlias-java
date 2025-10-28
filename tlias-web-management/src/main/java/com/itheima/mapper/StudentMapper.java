@@ -48,4 +48,10 @@ public interface StudentMapper {
 	 */
 	@MapKey("name")
 	List<Map<String, Object>> getStudentDegreeData();
+
+	/**
+	 * 班级人数统计
+	 */
+	@MapKey("name")
+	List<Map<String, Object>> getStudentCountData();
 }

@@ -2,6 +2,7 @@ package com.itheima.service;
 
 
 import com.itheima.pojo.JobOption;
+import com.itheima.pojo.StudentOption;
 
 import java.util.List;
 import java.util.Map;
@@ -16,4 +17,6 @@ public interface ReportService {
 	//学员学历统计
 	List<Map<String, Object>> getStudentDegreeData();
 
+	//班级人数统计
+	StudentOption getStudentCountData();
 }

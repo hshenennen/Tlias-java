@@ -3,6 +3,7 @@ package com.itheima.service.impl;
 import com.itheima.mapper.EmpMapper;
 import com.itheima.mapper.StudentMapper;
 import com.itheima.pojo.JobOption;
+import com.itheima.pojo.StudentOption;
 import com.itheima.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,12 +41,24 @@ public class ReportServiceImpl implements ReportService {
 	public List<Map<String, Object>> getEmpGenderData() {
 		return empMapper.countEmpGenderData();
 	}
+
 	/**
 	 * 学员学历统计
 	 */
 	@Override
 	public List<Map<String, Object>> getStudentDegreeData() {
 		return studentMapper.getStudentDegreeData();
+	}
+
+	/**
+	 * 班级人数统计
+	 */
+	@Override
+	public StudentOption getStudentCountData() {
+		List<Map<String, Object>> list = studentMapper.getStudentCountData();
+		List<Object> name = list.stream().map(item -> item.get("name")).toList();
+		List<Object> sum = list.stream().map(item -> item.get("sum")).toList();
+		return new StudentOption(name, sum);
 	}
 
 }

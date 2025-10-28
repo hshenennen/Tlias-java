@@ -2,6 +2,7 @@ package com.itheima.controller;
 
 import com.itheima.pojo.JobOption;
 import com.itheima.pojo.Result;
+import com.itheima.pojo.StudentOption;
 import com.itheima.service.ReportService;
 import com.itheima.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
@@ -47,8 +48,16 @@ public class ReportController {
 	 */
 	@GetMapping("/studentDegreeData")
 	public Result getStudentDegreeData() {
-		List<Map<String,Object>> list=reportService.getStudentDegreeData();
+		List<Map<String, Object>> list = reportService.getStudentDegreeData();
 		return Result.success(list);
 	}
 
+	/**
+	 *  班级人数统计
+	 */
+	@GetMapping("/studentCountData")
+	public Result getStudentCountData() {
+		StudentOption studentOption=reportService.getStudentCountData();
+		return Result.success(studentOption);
+	}
 }
