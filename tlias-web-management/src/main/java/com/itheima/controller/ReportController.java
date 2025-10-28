@@ -39,4 +39,7 @@ public class ReportController {
 		List<Map<String, Object>> list = reportService.getEmpGenderData();
 		return Result.success(list);
 	}
+	/**
+	 * 5.3 学员学历统计
+	 */
 }

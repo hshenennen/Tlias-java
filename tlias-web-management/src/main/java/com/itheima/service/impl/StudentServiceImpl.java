@@ -11,6 +11,7 @@ import com.itheima.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -52,12 +53,55 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public void addStudent(Student student) {
 		//补全信息
-       student.setCreateTime(LocalDateTime.now());
-	   student.setUpdateTime(LocalDateTime.now());
-	   student.setViolationCount((short) 0);
-	   student.setViolationScore((short) 0);
+		student.setCreateTime(LocalDateTime.now());
+		student.setUpdateTime(LocalDateTime.now());
+		student.setViolationCount((short) 0);
+		student.setViolationScore((short) 0);
 
-	   studentMapper.addStudent(student);
+		studentMapper.addStudent(student);
+	}
+
+	/**
+	 * id查询学员
+	 */
+	@Override
+	public Student getIdStudent(Integer id) {
+		return studentMapper.getIdStudent(id);
+	}
+
+	/**
+	 * 修改学员
+	 */
+	@Override
+	public void modifyStudent(Student student) {
+		//更新时间
+		student.setUpdateTime(LocalDateTime.now());
+
+		studentMapper.modifyStudent(student);
+	}
+
+	/**
+	 * 违纪处理
+	 */
+	@Transactional(rollbackFor = {Exception.class})
+	@Override
+	public void disciplinaryStudent(Integer id, Integer score) {
+		//先通过id查询学员的信息
+		Student student = studentMapper.getIdStudent(id);
+
+		//判断分数
+		if (score <= 0) {
+			throw new RuntimeException("扣分必须大于0");
+		}
+		//更新违规分数
+		int newScore = student.getViolationScore() + score;
+		student.setViolationScore((short) newScore);
+
+		//更新违规次数
+		int newCount = student.getViolationCount() + 1;
+		student.setViolationCount((short) newCount);
+
+		studentMapper.disciplinaryStudent(student);
 	}
 
 

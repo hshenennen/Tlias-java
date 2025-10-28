@@ -15,4 +15,13 @@ public interface StudentService {
 
 	//增加学员
 	void addStudent(Student student);
+
+	//id查询学员
+	Student getIdStudent(Integer id);
+
+	//修改学员
+	void modifyStudent(Student student);
+
+	//违纪处理
+	void disciplinaryStudent(Integer id, Integer score);
 }
