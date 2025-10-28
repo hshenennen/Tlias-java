@@ -5,6 +5,7 @@ import com.itheima.pojo.StudentQueryParam;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface StudentMapper {
@@ -41,4 +42,10 @@ public interface StudentMapper {
 
 	@Update("update student set violation_count=#{violationCount},violation_score=#{violationScore} where id=#{id} ")
 	void disciplinaryStudent(Student student);
+
+	/**
+	 * 学员学历统计
+	 */
+	@MapKey("name")
+	List<Map<String, Object>> getStudentDegreeData();
 }

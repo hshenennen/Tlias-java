@@ -3,6 +3,7 @@ package com.itheima.controller;
 import com.itheima.pojo.JobOption;
 import com.itheima.pojo.Result;
 import com.itheima.service.ReportService;
+import com.itheima.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ public class ReportController {
 
 	@Autowired
 	private ReportService reportService;
+
 
 	/**
 	 * 统计员工的职位数量
@@ -39,7 +41,14 @@ public class ReportController {
 		List<Map<String, Object>> list = reportService.getEmpGenderData();
 		return Result.success(list);
 	}
+
 	/**
-	 * 5.3 学员学历统计
+	 * 学员学历统计
 	 */
+	@GetMapping("/studentDegreeData")
+	public Result getStudentDegreeData() {
+		List<Map<String,Object>> list=reportService.getStudentDegreeData();
+		return Result.success(list);
+	}
+
 }

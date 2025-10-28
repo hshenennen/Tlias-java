@@ -12,4 +12,8 @@ public interface ReportService {
 
 	//统计员工的性别数量
 	List<Map<String,Object>> getEmpGenderData();
+
+	//学员学历统计
+	List<Map<String, Object>> getStudentDegreeData();
+
 }

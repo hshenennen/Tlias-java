@@ -73,7 +73,7 @@ public interface EmpMapper {
 	/**
 	 * 统计员工的性别数量
 	 */
-	@MapKey("mane")
+	@MapKey("name")
 	List<Map<String, Object>> countEmpGenderData();
 
 	/**

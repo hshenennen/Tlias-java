@@ -5,6 +5,7 @@ import com.itheima.pojo.Student;
 import com.itheima.pojo.StudentQueryParam;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StudentService {
 	//分页查询
@@ -24,4 +25,5 @@ public interface StudentService {
 
 	//违纪处理
 	void disciplinaryStudent(Integer id, Integer score);
+
 }
