@@ -87,4 +87,10 @@ public interface EmpMapper {
 	 */
 	@Select("select count(*) from emp  where job=#{id} order by job;")
 	Integer getJobEmp(Integer id);
+
+	/**
+	 * 登录
+	 */
+	@Select("select id,username,password,name  from emp where username=#{username} and password=#{password};")
+	Emp login(Emp emp);
 }

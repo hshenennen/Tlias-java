@@ -38,7 +38,7 @@ public class ReportController {
 	 * 统计员工的性别数量
 	 */
 	@GetMapping("/empGenderData")
-	public Result getEmpGenderData() {
+	public Result getEmpGenderData () {
 		List<Map<String, Object>> list = reportService.getEmpGenderData();
 		return Result.success(list);
 	}
