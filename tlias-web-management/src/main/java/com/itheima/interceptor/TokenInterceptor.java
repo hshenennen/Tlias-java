@@ -1,39 +1,26 @@
-package com.itheima.filter;
+package com.itheima.interceptor;
 
 import com.itheima.utils.JwtUtils;
-import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 @Slf4j
-//@WebFilter(urlPatterns = "/*")
-
-public class TokenFilter implements Filter {
-
-	/**
-	 * 令牌校验过滤器
-	 */
-
+@Component
+public class TokenInterceptor implements HandlerInterceptor {
+	//目标资源方法执行前执行。
 	@Override
-	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
-		// 强转是为了使用 HTTP 特有的方法（如获取 header、设置状态码等）。
-		HttpServletRequest request = (HttpServletRequest) servletRequest;
-		HttpServletResponse response = (HttpServletResponse) servletResponse;
-
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		//1. 获取请求url。
 		String url = request.getRequestURI();
 
 		//2. 判断请求url中是否包含login，如果包含，说明是登录操作，放行
-		if (url.contains("login")) {
+        /*		if (url.contains("login")) {
 			log.info("登录操作, 放行...");
-			filterChain.doFilter(request, response);
-			return;
-		}
+			return true;
+		}*/
 
 		//3. 获取请求头中的令牌（token）。
 		String token = request.getHeader("token");
@@ -42,7 +29,7 @@ public class TokenFilter implements Filter {
 		if (token == null || token.isEmpty()) {
 			log.info(" 令牌为空,未登录...");
 			response.setStatus(401);
-			return;
+			return false;
 		}
 
 		//5. 解析token，如果解析失败，返回错误结果（未登录）。
@@ -52,12 +39,11 @@ public class TokenFilter implements Filter {
 			e.printStackTrace();
 			log.info("令牌解析失败，未登录...");
 			response.setStatus(401);
-			return;
+			return false;
 		}
 
 		//6. 放行。
 		log.info("令牌校验通过，放行...");
-		filterChain.doFilter(request, response);
+		return true;
 	}
 }
-
