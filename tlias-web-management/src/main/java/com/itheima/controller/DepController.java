@@ -1,6 +1,7 @@
 package com.itheima.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.itheima.anno.LogOperation;
 import com.itheima.mapper.EmpMapper;
 import com.itheima.pojo.Dept;
 import com.itheima.pojo.Emp;
@@ -65,6 +66,7 @@ public class DepController {
 	/**
 	 * 删除部门－方式三：省略@RequestParam（前端传递的请求参数名与服务端方法形参名一致
 	 */
+	@LogOperation
 	@Transactional(rollbackFor = {Exception.class})
 	@DeleteMapping
 	public Result delete(Integer id) throws Exception {
@@ -86,6 +88,7 @@ public class DepController {
 	 * 添加部门
 	 */
 	@PostMapping
+	@LogOperation
 	public Result add(@RequestBody Dept dept) {
 		depService.add(dept);
 		return Result.success();
@@ -113,6 +116,7 @@ public class DepController {
 	 * 修改部门
 	 */
 	@PutMapping
+	@LogOperation
 	public Result update(@RequestBody Dept dept) {
 		depService.update(dept);
 		return Result.success();

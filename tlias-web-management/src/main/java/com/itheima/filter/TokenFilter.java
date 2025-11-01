@@ -1,6 +1,8 @@
 package com.itheima.filter;
 
+import com.itheima.utils.CurrentHolder;
 import com.itheima.utils.JwtUtils;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 
 @Slf4j
-//@WebFilter(urlPatterns = "/*")
+@WebFilter(urlPatterns = "/*")
 
 public class TokenFilter implements Filter {
 
@@ -47,7 +49,10 @@ public class TokenFilter implements Filter {
 
 		//5. 解析token，如果解析失败，返回错误结果（未登录）。
 		try {
-			JwtUtils.parseJWT(token);
+			Claims claims = JwtUtils.parseJWT(token);//解析令牌
+			Object id = claims.get("id");//获取员工id
+			Integer empId = Integer.valueOf(id.toString());//把id转为int
+			CurrentHolder.setCurrentId(empId);//设置当前登录的id
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.info("令牌解析失败，未登录...");
@@ -58,6 +63,9 @@ public class TokenFilter implements Filter {
 		//6. 放行。
 		log.info("令牌校验通过，放行...");
 		filterChain.doFilter(request, response);
+
+		//7. 移除当前线程的id
+		CurrentHolder.remove();
 	}
 }
 
